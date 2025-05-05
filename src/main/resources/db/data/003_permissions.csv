@@ -1,0 +1,7 @@
+id,name
+1,user:create
+2,user:read
+3,user:update
+4,user:delete
+5,role:create
+6,role:read

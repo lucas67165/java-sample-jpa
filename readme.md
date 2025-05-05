@@ -1,0 +1,2 @@
+`$2a$10$wHeheI6OTiYSFHPUS370VeGFQjGJ6d1C5OLH.xKsyj9.sbHKS.MKG`
+`123456`# java-sample-jpa

@@ -1,0 +1,2 @@
+id,first_name,last_name,username,password,email,account_non_expired,account_non_locked,credentials_non_expired,is_approve
+1,lucas,maya,lucas,$2a$10$ExVKRbX/B.ssHoM3e99NJ.Qr3lXKRaEO9LOeTor1sJSjOqazz4ymW,lucas@gmail.com,true,true,true,true
