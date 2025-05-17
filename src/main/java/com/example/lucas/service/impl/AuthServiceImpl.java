@@ -24,7 +24,10 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 
 /**
+ * Implementation of the AuthService interface for authentication operations
+ * 
  * @author Lucas
+ * @since 1.0
  */
 @Service
 @RequiredArgsConstructor
@@ -46,23 +49,34 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public String createUser(SignupRequest signUpRequest) {
         String username = signUpRequest.getUsername();
-        String defaultEmail = username + "@example.com";
+        String email = signUpRequest.getEmail();
+        String referralCode = signUpRequest.getReferralCode();
 
+        // Validate username and email
         if (userRepository.existsByUsername(username)) {
             throw new ApiException(HttpStatus.BAD_REQUEST, "Username is already taken!");
         }
 
-        if (userRepository.existsByEmail(defaultEmail)) {
+        if (userRepository.existsByEmail(email)) {
             throw new ApiException(HttpStatus.BAD_REQUEST, "Email is already taken!");
         }
 
-        // Create new user's account with the default email
-        User user = new User(username, defaultEmail,
+        // Create new user's account with the provided email
+        User user = new User(username, email,
                 passwordEncoder.encode(signUpRequest.getPassword()));
 
         // Calculate expiration date from the config value (convert ms to days)
         long days = jwtExpirationMs / (24 * 60 * 60 * 1000);
         user.setExpirationDate(LocalDate.now().plusDays(days));
+
+        // Set referral code if provided
+        if (referralCode != null && !referralCode.isEmpty()) {
+            // TODO: Implement referral code processing logic
+            // This could include:
+            // 1. Validating the referral code
+            // 2. Linking the user to the referrer
+            // 3. Applying any referral benefits
+        }
 
         // Persist the user to initialize the persistence context
         User savedUser = userRepository.save(user);

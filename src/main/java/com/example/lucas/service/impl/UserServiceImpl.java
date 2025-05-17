@@ -135,9 +135,36 @@ public class UserServiceImpl implements UserService {
 				.orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "User not found"));
 	}
 
+	/**
+	 * Updates a user's information
+	 * 
+	 * @param user the user with updated information
+	 * @return the updated user
+	 * @throws ApiException if the user is not found
+	 */
 	@Override
+	@Transactional
 	public User update(User user) {
-		return null;
+		User existingUser = userRepository.findById(user.getId())
+				.orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "User not found"));
+
+		// Update basic information
+		existingUser.setName(user.getName());
+		existingUser.setNameEn(user.getNameEn());
+		existingUser.setEmail(user.getEmail());
+
+		// Update profile information
+		existingUser.setGender(user.getGender());
+		existingUser.setDob(user.getDob());
+		existingUser.setIdCardNo(user.getIdCardNo());
+		existingUser.setIdCardIssueDate(user.getIdCardIssueDate());
+		existingUser.setMaritalStatus(user.getMaritalStatus());
+		existingUser.setPhoto(user.getPhoto());
+
+		// Don't update security-related fields like password, enabled status, etc.
+		// These should be handled by separate methods with proper authorization
+
+		return userRepository.save(existingUser);
 	}
 
 	@Override

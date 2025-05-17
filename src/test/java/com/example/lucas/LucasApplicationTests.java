@@ -1,11 +1,12 @@
 package com.example.lucas;
 
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class LmsApplicationTests {
+class LucasApplicationTests {
 
-	//@Test
+	@Test
 	void contextLoads() {
 	}
 

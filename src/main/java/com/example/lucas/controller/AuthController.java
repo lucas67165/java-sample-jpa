@@ -19,7 +19,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
+ * Controller for handling authentication-related endpoints
+ * 
  * @author Lucas
+ * @since 1.0
  */
 @RestController
 @RequiredArgsConstructor
@@ -28,6 +31,12 @@ public class AuthController {
 
     private final AuthService authService;
 
+    /**
+     * Authenticates a user and returns a JWT token
+     *
+     * @param loginRequest the request containing user login credentials
+     * @return ResponseEntity with the authentication result and JWT token
+     */
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
         // Authenticate user and generate JWT
@@ -49,6 +58,12 @@ public class AuthController {
         return ResponseEntity.ok().body(Result.ok(responseBody));
     }
 
+    /**
+     * Registers a new user and returns a JWT token
+     *
+     * @param signUpRequest the request containing user registration information
+     * @return ResponseEntity with the registration result and JWT token
+     */
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
         String jwt = authService.createUser(signUpRequest);
@@ -63,6 +78,11 @@ public class AuthController {
     }
 
 
+    /**
+     * Retrieves the access codes (authorities) for the authenticated user
+     *
+     * @return ResponseEntity with the list of authorities
+     */
     @GetMapping("/codes")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> getAccessCodes() {
